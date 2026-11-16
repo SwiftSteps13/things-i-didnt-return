@@ -2501,5 +2501,9 @@ document.querySelectorAll('[data-next-card]').forEach(function(b){b.addEventList
 })();
 </script>
 
+<script>
+(function(){if(window.parent===window)return;var last=0;function send(){var h=Math.ceil(document.documentElement.scrollHeight);if(h!==last){last=h;window.parent.postMessage({tidr:1,height:h},'*')}}
+window.addEventListener('load',send);window.addEventListener('resize',send);if(window.ResizeObserver)new ResizeObserver(send).observe(document.body);setInterval(send,1500);send();})();
+</script>
 </body>
 </html>
