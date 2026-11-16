@@ -313,12 +313,29 @@ footer .xo{font-weight:600;font-style:italic;font-size:34px}
 .hP2 .bgph{object-position:50% 6%}
 @media(min-width:621px){.hP2 .bgph{left:auto;right:0;width:62%}.hP2 .ov{background:linear-gradient(90deg,#FF2FAC 0%,#FF2FAC 38%,rgba(255,47,172,.75) 46%,rgba(255,47,172,0) 62%)}}
 @media(max-width:620px){.hP2 .bgph{object-position:62% 6%}}
+
+  /* card galleries: controls + label in a strip under the photo so nothing covers the item */
+  .card .photo.gal{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start}
+  .card .photo.gal .slides{flex:1 1 auto;min-height:0;height:auto}
+  .card .photo.gal .irl{display:none}
+  .card .photo .gal-ctrl{position:static;flex:none;display:flex;justify-content:space-between;gap:10px;background:#fff!important;box-shadow:none!important;border-radius:0;border-top:1px solid var(--line);padding:8px 10px}
+  .card .photo .gal-ctrl .mid{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2;text-align:center}
+  .card .photo .gal-ctrl .lbl{font-family:"Space Mono",monospace;font-weight:700;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:var(--pinkdeep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .card .photo .gal-ctrl .lbl:empty{display:none}
+  .card .photo .gal-ctrl .count{font-size:14px;min-width:0}
+  .real-solo .irl{top:auto;bottom:12px}
+
+.hP2 .tx{text-align:center}
+.hP2 h1{margin:0 auto}
+.hP2 .cap{position:absolute;right:28px;bottom:28px;z-index:2;font-size:17px}
+@media(min-width:621px){.hP2{align-items:center}.hP2 .tx{margin:0;width:46%;max-width:none;padding:40px 24px}}
+@media(max-width:620px){.hP2 .tx{padding:0 22px 44px}.hP2 .cap{right:14px;bottom:auto;top:345px;font-size:15px}}
 </style>
 </head>
 <body>
 
 <header class="hP2"><img class="bgph" src="img/heart-sunglasses-house.jpg" alt="Jewels holding the keys to her new house the day she bought it">
-<div class="ov"></div><div class="tx"><div class="k">10 years in recovery</div><h1>The Things I Didn&#39;t Return</h1><div class="cap">The day I bought my house</div></div></header>
+<div class="ov"></div><div class="tx"><h1>The Things I Didn&#39;t Return</h1></div><div class="cap">The day I bought my house</div></header>
 <section class="hR"><div class="hgrid"><div class="rc"><div class="store">Return receipt · Jewels</div>
 <div class="ln"><span>Items bought</span><b>a lot</b></div><div class="ln"><span>Items returned</span><b>most</b></div><div class="ln"><span>Items kept</span><b>222</b></div>
 <div class="tot"><span>Years in recovery</span><span>10</span></div><div class="stamp">KEPT</div></div><div class="collage" aria-hidden="true"><a class="tile" href="#track-02"><img src="img/collagen-mist.jpg" alt="" loading="eager"></a><a class="tile" href="#track-rbg-socks"><img src="img/rbg-socks.jpg" alt="" loading="eager"></a><a class="tile" href="#track-135"><img src="img/heart-sunglasses.jpg" alt="" loading="eager"></a><a class="tile" href="#track-150"><img src="img/emo-nite-mug.jpg" alt="" loading="eager"></a><a class="tile" href="#track-50"><img src="img/refuge-recovery.jpg" alt="" loading="eager"></a><a class="tile" href="#track-pearl-bows"><img src="img/pearl-bows.jpg" alt="" loading="eager"></a><a class="tile" href="#track-129"><img src="img/checker-overalls.jpg" alt="" loading="eager"></a><a class="tile" href="#track-queen-helene"><img src="img/queen-helene.jpg" alt="" loading="eager"></a><a class="tile" href="#track-fredericks-mae"><img src="img/fredericks-mae.jpg" alt="" loading="eager"></a><a class="tile" href="#track-153-b"><img src="img/sm-tiedye.jpg" alt="" loading="eager"></a></div><div class="mast-copy">
@@ -2448,7 +2465,10 @@ footer .xo{font-weight:600;font-style:italic;font-size:34px}
     var caps=g.querySelectorAll('.caps figcaption');
     g.setAttribute('data-count',n);
     function pad(x){return (x<10?'0':'')+x}
+    var mid=null,lbl=null;
+    if(count&&g.closest('.card')){mid=document.createElement('span');mid.className='mid';lbl=document.createElement('span');lbl.className='lbl';count.parentNode.insertBefore(mid,count);mid.appendChild(lbl);mid.appendChild(count)}
     function show(i){cur=i;
+      if(lbl){var t=s.children[i]&&s.children[i].querySelector('.irl');lbl.textContent=t?t.textContent:''}
       if(count)count.textContent=pad(i+1)+' / '+pad(n);
       if(prev)prev.disabled=i===0; if(next)next.disabled=i===n-1;
       caps.forEach(function(c,j){c.hidden=j!==i});
